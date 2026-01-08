@@ -3,8 +3,8 @@ import java.util.Scanner;
 
     public class Game {
 
-        private static final char HUMAN = 'x';
-        private static final char COMPUTER = 'o';
+        private static final char HUMAN = 'X';
+        private static final char COMPUTER = 'O';
 
         private final Board board;
         private final Scanner scanner;
@@ -22,8 +22,8 @@ import java.util.Scanner;
         public void start() { //csak szervezés, mi után mi következzen
             askPlayerName();
             initBoard();
-            board.print();
 
+            board.printBoard();
             gameLoop();
         }
 
@@ -36,30 +36,31 @@ import java.util.Scanner;
             board.loadFromFile("input.txt");
 
             if (board.isEmpty()) {
-                board.placeInitialMove();
+                board.placeInitialMove(HUMAN);
             }
         }
 
         private void gameLoop() {
             while (true) {
 
+                computerTurn();
+                board.printBoard();
+
+                if (board.checkWin(COMPUTER)) {
+                    endGame("Gép");
+                    break;
+                }
+
                 // Ember lép
                 humanTurn();
-                board.print();
+                board.printBoard();
 
                 if (board.checkWin(HUMAN)) {
                     endGame(playerName);
                     break;
                 }
 
-                // Gép lép
-                computerTurn();
-                board.print();
 
-                if (board.checkWin(COMPUTER)) {
-                    endGame("Gép");
-                    break;
-                }
             }
         }
 
