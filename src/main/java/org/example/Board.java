@@ -19,6 +19,8 @@ public class Board {
     private final int cols;
     private final char[][] board;
 
+
+
     private static final char EMPTY = '.';
 
     public Board(int rows, int cols) {

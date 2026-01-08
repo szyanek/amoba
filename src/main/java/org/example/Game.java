@@ -1,5 +1,11 @@
 package org.example;
+
+import java.io.File;
 import java.util.Scanner;
+
+//létrehozott db kezelő meghívása
+import org.example.database.DbManager;
+
 
     public class Game {
 
@@ -20,6 +26,8 @@ import java.util.Scanner;
          * A JÁTÉK BELÉPÉSI PONTJA (main HÍVJA)
          */
         public void start() { //csak szervezés, mi után mi következzen
+            DbManager.initDatabase(); //adatbázis létrehozása már a játék indításakor
+
             askPlayerName();
             initBoard();
 
@@ -33,9 +41,15 @@ import java.util.Scanner;
         }
 
         private void initBoard() {
-            board.loadFromFile("load.txt");
+            File file = new File("output.txt");
+
+            if (file.exists()) {
+                System.out.println("Mentett játék betöltése.......");
+                board.loadFromFile("output.txt");
+            }
 
             if (board.isEmpty()) {
+                System.out.println("Új játék indul.");
                 board.placeInitialMove(HUMAN);
             }
         }
@@ -69,7 +83,6 @@ import java.util.Scanner;
                 }
             }
         }
-
         private void humanTurn() {
             while (true) {
                 System.out.print("Add meg a lépést (sor oszlop) vagy M a mentéshez: ");
@@ -103,12 +116,5 @@ import java.util.Scanner;
             System.out.println("A játék véget ért!");
             System.out.println("Nyertes: " + winner);
 
-            System.out.print("Szeretnéd elmenteni a játékállást? (i/n): ");
-            String answer = scanner.next();
-
-            if (answer.equalsIgnoreCase("i")) {
-                board.saveGame("oputput.txt");
-                System.out.println("Játék elmentve.");
-            }
         }
     }
