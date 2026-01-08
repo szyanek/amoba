@@ -33,7 +33,7 @@ import java.util.Scanner;
         }
 
         private void initBoard() {
-            board.loadFromFile("input.txt");
+            board.loadFromFile("load.txt");
 
             if (board.isEmpty()) {
                 board.placeInitialMove(HUMAN);
@@ -50,6 +50,10 @@ import java.util.Scanner;
                     endGame("Gép");
                     break;
                 }
+                if (board.isBoardFull()) {
+                    System.out.println("A tábla betelt. Döntetlen!");
+                    break;
+                }
 
                 // Ember lép
                 humanTurn();
@@ -59,24 +63,32 @@ import java.util.Scanner;
                     endGame(playerName);
                     break;
                 }
-
-
+                if (board.isBoardFull()) {
+                    System.out.println("A tábla betelt. Döntetlen!");
+                    break;
+                }
             }
         }
 
         private void humanTurn() {
             while (true) {
-                System.out.print("Add meg a lépést (sor oszlop): ");
-                int row = scanner.nextInt();
-                int col = scanner.nextInt();
+                System.out.print("Add meg a lépést (sor oszlop) vagy M a mentéshez: ");
+                String input = scanner.nextLine().trim();
+//trim: a beírt szöveg elejéről és végéről leveszi a plusz szóközöket, tabbokat
+                if (input.equalsIgnoreCase("m")) {
+                    board.saveGame("output.txt");
+                    System.out.println("Játék elmentve.");
+                    continue;
+                }
 
-                Position pos = new Position(row, col);
+                String[] p = input.split("\\s+");
+                if (p.length != 2) continue;
+
+                Position pos = new Position(Integer.parseInt(p[0]),Integer.parseInt(p[1]));
 
                 if (board.isValidMove(pos)) {
                     board.placeMove(pos, HUMAN);
                     break;
-                } else {
-                    System.out.println("Érvénytelen lépés, próbáld újra!");
                 }
             }
         }
@@ -91,9 +103,12 @@ import java.util.Scanner;
             System.out.println("A játék véget ért!");
             System.out.println("Nyertes: " + winner);
 
-            // ide később jön:
-            // - adatbázis mentés
-            // - high score kiírás
-            // - fájlba mentés
+            System.out.print("Szeretnéd elmenteni a játékállást? (i/n): ");
+            String answer = scanner.next();
+
+            if (answer.equalsIgnoreCase("i")) {
+                board.saveGame("oputput.txt");
+                System.out.println("Játék elmentve.");
+            }
         }
     }

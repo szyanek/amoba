@@ -3,7 +3,9 @@ package org.example;
 
 //importok a fájl beolvasáshoz és a kivételkezeléshez
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 //importok a random gépi lépéshez
@@ -71,7 +73,7 @@ public class Board {
         System.out.println(); //sortörés
     }
 
-    //tábla oszlopindexeinek kiírása
+    //tábla tábla kiírása kiírása
     public void printBoard() {
         System.out.println();
         printColumnIndexes();//oszlopindexek
@@ -85,7 +87,7 @@ public class Board {
         }
         System.out.println();
     }
-    //üres-e a tábla? ha igen, Game leteszi a kezdő x-et középre
+    //ellenőrzi, üres-e a tábla
     public boolean isEmpty() {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
@@ -153,6 +155,7 @@ public class Board {
         board[position.getRow()][position.getCol()] = symbol;
     }
 
+    //győzelem ellenőrzése
     public boolean checkWin(char symbol) {
         // vízszintes
         for (int r = 0; r < rows; r++) {
@@ -209,7 +212,7 @@ public class Board {
 
         return false;
     }
-    //ellenőrizzük, tel van-e a tábla
+    //ellenőrizzük, tele van-e a tábla, ez a döntetlenhez kell
     public boolean isBoardFull() {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
@@ -220,8 +223,18 @@ public class Board {
         }
         return true;
     }
-
-
-
+    //tábla soronkét írása fájlba, állás mentése
+    public void saveGame(String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            for (int r = 0; r < rows; r++) {
+                for (int c = 0; c < cols; c++) {
+                    writer.write(board[r][c]);
+                }
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Nem sikerült a játék mentése fájlba.");
+        }
+    }
 }
 
