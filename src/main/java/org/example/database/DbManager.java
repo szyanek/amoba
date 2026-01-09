@@ -42,6 +42,9 @@ public class DbManager {
                 update.setString(1, playerName);
                 int affectedRows = update.executeUpdate();
 
+        //affectedRows: eltárolja, hányszor volt tábla frissítés
+
+        //ha nem volt, insert történik, újként bekerül a név és a pont
                 if (affectedRows == 0) {
                     try (PreparedStatement insert = conn.prepareStatement(insertSql)) {
                         insert.setString(1, playerName);

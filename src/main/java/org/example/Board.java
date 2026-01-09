@@ -139,8 +139,7 @@ public class Board {
         return false;
     }
 
-    //tábla minden pontjának ellenőrzése, ha érvényes lépés lehet
-    //egy helyen, koordináta listába helyezése
+    //tábla minden pontjának ellenőrzése; érvényes lépés lehet? --> listába
     public Position getRandomValidMove() {
         List<Position> validMoves = new ArrayList<>();
         for (int r = 0; r < rows; r++) {
@@ -151,7 +150,7 @@ public class Board {
                 }
             }
         }
-        if (validMoves.isEmpty()) { //ha a lista üres marad, üres a tábla
+        if (validMoves.isEmpty()) { //ha a lista üres, nincs érvényes lépés
             return null;
         }
         //az érvényes lépések közül random választ a gépi játékos

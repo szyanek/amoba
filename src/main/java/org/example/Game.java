@@ -93,7 +93,7 @@ import org.example.database.DbManager;
             while (true) {
                 System.out.print("Add meg a lépést (sor oszlop) vagy M a mentéshez: ");
                 String input = scanner.nextLine().trim();
-//trim: a beírt szöveg elejéről és végéről leveszi a plusz szóközöket, tabbokat
+
                 if (input.equalsIgnoreCase("m")) {
                     board.saveGame("output.txt");
                     System.out.println("Játék elmentve.");
