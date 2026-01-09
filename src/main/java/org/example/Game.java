@@ -113,8 +113,13 @@ import org.example.database.DbManager;
         }
 
         private void endGame(String winner) {
+            if (winner.equals(playerName)) {
+                DbManager.saveWin(winner);
+            }
+
             System.out.println("A játék véget ért!");
             System.out.println("Nyertes: " + winner);
 
+            DbManager.printHighScore();
         }
     }

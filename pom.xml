@@ -37,17 +37,78 @@
             <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
-        <!-- To define the plugin version in your parent POM -->
+<!-- To define the plugin version in your parent POM -->
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>3.5.0</version>
                 </plugin>
+<!--  _________________________________________________________________________________________________ -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.6.0</version>
+
+                    <configuration>
+                        <archive>
+                            <manifest> <!-- Main megadása belépési pontként -->
+                                <mainClass>org.example.Main</mainClass>
+                            </manifest>
+                        </archive>
+                        <descriptorRefs> <!--becsomagolás módja, jar-ba a függőségek is kerüljenek-->
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
+                    </configuration>
+
+                    <executions>
+                        <execution>
+                            <id>make-assembly</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal> <!--1 db fájl készüljön, ne zip vagy többb fájl csak 1 jar-->
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+<!-- JacCoCo beállítása-->
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.14</version>
+
+                    <executions>
+                        <!-- JaCoCo összekötése a tesztefuttatással -->
+                        <execution>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+
+                        <!-- Riport generálása, létrejön az index.html -->
+                        <execution>
+                            <id>report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+<!---->
+                            <configuration>
+                                <excludes>
+                                    <exclude>org/example/Game*</exclude>
+                                    <exclude>org/example/Main*</exclude>
+                                    <exclude>org/example/Position*</exclude>
+                                    <exclude>org/example/database/**</exclude>
+                                </excludes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
 
     </build>
