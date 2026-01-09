@@ -23,7 +23,7 @@ public class Board {
 
     private static final char EMPTY = '.';
 
-    public Board(int rows, int cols) {
+   public Board(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
         this.board = new char[rows][cols];
@@ -89,6 +89,8 @@ public class Board {
         }
         System.out.println();
     }
+
+
     //ellenőrzi, üres-e a tábla
     public boolean isEmpty() {
         for (int r = 0; r < rows; r++) {
@@ -100,6 +102,8 @@ public class Board {
         }
         return true;
     }
+
+
 
     //lépés szabályosságának ellenőprzése
     public boolean isValidMove(Position position) {

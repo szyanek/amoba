@@ -17,11 +17,39 @@
     <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
     <dependencies>
 
+        <!-- h2 adatbázis -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>2.3.232</version>
         </dependency>
 
+        <!--junit5 a teszteléshez -->
+        <!--
+            üzleti logika tesztelése: a feladatokra elkülöndített külön
+            classok és metódusok tesztelése egyenként, a Board classra vonatkozik0
+            a vezérlés nem tartozik az üzleti logikába, Game class
+            main szintén nem, nincs benne döntési logika
+        -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
+
+    <build>
+        <!-- To define the plugin version in your parent POM -->
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>
+            </plugins>
+
+    </build>
+
 </project>
