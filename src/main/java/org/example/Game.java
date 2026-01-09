@@ -1,5 +1,9 @@
 package org.example;
 
+//importok naplózáshoz
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.util.Scanner;
 
@@ -8,6 +12,8 @@ import org.example.database.DbManager;
 
 
     public class Game {
+
+        private static final Logger logger = LoggerFactory.getLogger(Game.class);
 
         private static final char HUMAN = 'X';
         private static final char COMPUTER = 'O';
@@ -18,13 +24,13 @@ import org.example.database.DbManager;
         private String playerName;
 
         public Game() {
+            logger.info("Játék indítása");
             this.board = new Board(10, 10); // tipikus méret
             this.scanner = new Scanner(System.in);
+            logger.info("Játékos nevé: <>");
         }
 
-        /**
-         * A JÁTÉK BELÉPÉSI PONTJA (main HÍVJA)
-         */
+        /**belépési pont, main hívja*/
         public void start() { //csak szervezés, mi után mi következzen
             DbManager.initDatabase(); //adatbázis létrehozása már a játék indításakor
 
@@ -95,7 +101,9 @@ import org.example.database.DbManager;
                 }
 
                 String[] p = input.split("\\s+");
-                if (p.length != 2) continue;
+                if (p.length != 2) {
+                    continue;
+                }
 
                 Position pos = new Position(Integer.parseInt(p[0]),Integer.parseInt(p[1]));
 
@@ -113,6 +121,7 @@ import org.example.database.DbManager;
         }
 
         private void endGame(String winner) {
+        //csak ha a játékos nyer, azt rögzítjük
             if (winner.equals(playerName)) {
                 DbManager.saveWin(winner);
             }

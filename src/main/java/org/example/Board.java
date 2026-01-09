@@ -123,7 +123,9 @@ public class Board {
         // van-e szomszédos jel?
         for (int dr = -1; dr <= 1; dr++) {
             for (int dc = -1; dc <= 1; dc++) {
-                if (dr == 0 && dc == 0) continue;
+                if (dr == 0 && dc == 0) {
+                    continue;
+                }
                 int nr = r + dr;
                 int nc = c + dc;
                 if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
@@ -173,7 +175,9 @@ public class Board {
                         break;
                     }
                 }
-                if (win) return true;
+                if (win) {
+                    return true;
+                }
             }
         }
         // függőleges
@@ -186,10 +190,12 @@ public class Board {
                         break;
                     }
                 }
-                if (win) return true;
+                if (win) {
+                    return true;
+                }
             }
         }
-        // átló ↘
+        // átló fentről
         for (int r = 0; r <= rows - 5; r++) {
             for (int c = 0; c <= cols - 5; c++) {
                 boolean win = true;
@@ -199,10 +205,12 @@ public class Board {
                         break;
                     }
                 }
-                if (win) return true;
+                if (win) {
+                    return true;
+                }
             }
         }
-        // átló ↗
+        // átló lentről
         for (int r = 4; r < rows; r++) {
             for (int c = 0; c <= cols - 5; c++) {
                 boolean win = true;
@@ -212,7 +220,9 @@ public class Board {
                         break;
                     }
                 }
-                if (win) return true;
+                if (win) {
+                    return true;
+                }
             }
         }
 

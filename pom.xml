@@ -37,6 +37,22 @@
             <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.20.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Logback (naplózás) -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.13</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -75,7 +91,7 @@
                     </executions>
                 </plugin>
 
-<!-- JacCoCo beállítása-->
+<!-- JacCoCo beállítása -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-. -->
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
@@ -88,7 +104,6 @@
                                 <goal>prepare-agent</goal>
                             </goals>
                         </execution>
-
                         <!-- Riport generálása, létrejön az index.html -->
                         <execution>
                             <id>report</id>
@@ -96,7 +111,7 @@
                             <goals>
                                 <goal>report</goal>
                             </goals>
-<!---->
+<!--osztályok kivétele a tesztlefedettség riportjából-->
                             <configuration>
                                 <excludes>
                                     <exclude>org/example/Game*</exclude>
@@ -105,6 +120,31 @@
                                     <exclude>org/example/database/**</exclude>
                                 </excludes>
                             </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.6.0</version>
+<!--checkstyle fájl helyének megadása-->
+                    <configuration>
+                        <configLocation>
+                            ${basedir}/src/main/resources/checkstyle.xml
+                        </configLocation>
+
+                        <failOnViolation>true</failOnViolation>
+
+                    </configuration>
+<!---->
+                    <executions>
+                        <execution>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
                         </execution>
                     </executions>
                 </plugin>

@@ -72,7 +72,6 @@ public class DbManager {
             while (rs.next()) {
                 String name = rs.getString("name");
                 int wins = rs.getInt("numberOfWins");
-
                 System.out.println(name + "\t-\t" + wins + " győzelem");
             }
             System.out.println("------------------\n");
